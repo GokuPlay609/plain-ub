@@ -37,3 +37,8 @@ TAG_LOGGER_THREAD_ID: int = int(getenv("TAG_LOGGER_THREAD_ID", 0)) or None
 UPSTREAM_REPO: str = getenv("UPSTREAM_REPO", "https://github.com/thedragonsinn/plain-ub")
 
 USE_LEGACY_KANG: int = int(getenv("USE_LEGACY_KANG", 0))
+
+# Reddit API credentials for the .meme command
+REDDIT_CLIENT_ID: str = getenv("REDDIT_CLIENT_ID")
+REDDIT_CLIENT_SECRET: str = getenv("REDDIT_CLIENT_SECRET")
+REDDIT_USER_AGENT: str = getenv("REDDIT_USER_AGENT")
