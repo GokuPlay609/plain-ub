@@ -14,9 +14,15 @@ services:
     startCommand: "python -m app"
     envVars:
       - key: DATABASE_URL
-        value: "mongodb://mongodb:27017/"
+        fromService:
+          type: pserv
+          name: mongodb
+          property: connectionString
       - key: MONGO_DB_URL
-        value: "mongodb://mongodb:27017/"
+        fromService:
+          type: pserv
+          name: mongodb
+          property: connectionString
       - key: API_ID
         value: ""
       - key: API_HASH
