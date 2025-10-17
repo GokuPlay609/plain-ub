@@ -169,6 +169,8 @@ async def test_function(bot: BOT, message: Message):
 | `.ln` | Checks LastFM status. | `.ln` |
 | `.sn` | Checks Spotipie status. | `.sn` |
 | `.song` | Downloads a song from YouTube. | `.song <song_name/url>` |
+| Command | Description | Usage |
+|---|---|---|
 | `.flip` | Flips a coin. | `.flip` |
 | `.flips` | Shows your coin flip history. | `.flips` |
 | `.slap` | Slaps a user with a random object. | `.slap <reply/username>` |
@@ -223,3 +225,4 @@ async def test_function(bot: BOT, message: Message):
 | `.nopm` | Disallows a user to PM you. | `.nopm` or `.nopm <uid/@/reply>` |
 | `.reply` | Replies to a message. | `.reply <text>` or `.reply -r <message_link> <text>` |
 | `.resp` | Responds to a logged message. | `.resp <chat_id/reply> <text>` |
+| `.ghost` | Sends a self-destructing message. | `.ghost <message>` |
