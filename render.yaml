@@ -1,0 +1,45 @@
+services:
+  - type: pserv
+    name: mongodb
+    env: docker
+    dockerfilePath: ./Dockerfile.mongo
+    disk:
+      name: data
+      mountPath: /data/db
+      sizeGB: 1
+  - type: worker
+    name: plain-ub
+    env: python
+    buildCommand: "pip install -r req.txt && ./scripts/install_ub_core.sh"
+    startCommand: "python -m app"
+    envVars:
+      - key: DATABASE_URL
+        fromService:
+          type: pserv
+          name: mongodb
+          property: connectionString
+      - key: MONGO_DB_URL
+        fromService:
+          type: pserv
+          name: mongodb
+          property: connectionString
+      - key: API_ID
+        value: ""
+      - key: API_HASH
+        value: ""
+      - key: SESSION
+        value: ""
+      - key: LOG_CHAT
+        value: ""
+      - key: REDDIT_CLIENT_ID
+        value: ""
+      - key: REDDIT_CLIENT_SECRET
+        value: ""
+      - key: REDDIT_USER_AGENT
+        value: ""
+      - key: GEMINI_API_KEY
+        value: ""
+      - key: OPENAI_API_KEY
+        value: ""
+      - key: DALL_E_API_KEY
+        value: ""

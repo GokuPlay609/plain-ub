@@ -17,6 +17,7 @@ Welcome to PLAIN UB, a simple yet powerful Telegram User-Bot designed for person
   - [Command with Multiple Triggers](#command-with-multiple-triggers)
   - [Command with Database Access](#command-with-database-access)
   - [Conversational Command](#conversational-command)
+- [Deployment](#deployment)
 - [List of Available Commands](#list-of-available-commands)
   - [Admin Commands](#admin-commands)
   - [AI Commands](#ai-commands)
@@ -112,6 +113,23 @@ async def test_function(bot: BOT, message: Message):
         await convo.send_message(text="abc", get_response=True, timeout=8)
 ```
 
+## Deployment
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/GokuPlay609/plain-ub)
+
+### Step-by-Step Guide
+
+1.  **Click the "Deploy to Render" button above.** This will take you to Render's deployment page with the repository pre-filled.
+2.  **Give your new web service a name.** For example, `plain-ub`.
+3.  **Configure the Environment Variables.** You will need to set the following environment variables to get the bot running:
+    *   `API_ID`: Your Telegram API ID.
+    *   `API_HASH`: Your Telegram API hash.
+    *   `SESSION`: Your Pyrogram session string.
+    *   `LOG_CHAT`: The ID of the chat where you want to send logs.
+    *   You can also set the other optional environment variables, such as `REDDIT_CLIENT_ID`, `GEMINI_API_KEY`, etc.
+4.  **Click "Create Web Service".** Render will now build and deploy your userbot. This may take a few minutes.
+5.  **That's it!** Your userbot is now running on Render.
+
 ## List of Available Commands
 
 ### Admin Commands
@@ -169,8 +187,6 @@ async def test_function(bot: BOT, message: Message):
 | `.ln` | Checks LastFM status. | `.ln` |
 | `.sn` | Checks Spotipie status. | `.sn` |
 | `.song` | Downloads a song from YouTube. | `.song <song_name/url>` |
-| Command | Description | Usage |
-|---|---|---|
 | `.flip` | Flips a coin. | `.flip` |
 | `.flips` | Shows your coin flip history. | `.flips` |
 | `.slap` | Slaps a user with a random object. | `.slap <reply/username>` |
@@ -225,4 +241,3 @@ async def test_function(bot: BOT, message: Message):
 | `.nopm` | Disallows a user to PM you. | `.nopm` or `.nopm <uid/@/reply>` |
 | `.reply` | Replies to a message. | `.reply <text>` or `.reply -r <message_link> <text>` |
 | `.resp` | Responds to a logged message. | `.resp <chat_id/reply> <text>` |
-| `.ghost` | Sends a self-destructing message. | `.ghost <message>` |
