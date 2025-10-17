@@ -17,6 +17,15 @@ services:
         value: "mongodb://mongodb:27017/plain-ub"
       - key: MONGO_DB_URL
         value: "mongodb://mongodb:27017/plain-ub"
+        fromService:
+          type: pserv
+          name: mongodb
+          property: connectionString
+      - key: MONGO_DB_URL
+        fromService:
+          type: pserv
+          name: mongodb
+          property: connectionString
       - key: API_ID
         value: ""
       - key: API_HASH
