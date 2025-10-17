@@ -18,6 +18,12 @@ Welcome to PLAIN UB, a simple yet powerful Telegram User-Bot designed for person
   - [Command with Database Access](#command-with-database-access)
   - [Conversational Command](#conversational-command)
 - [List of Available Commands](#list-of-available-commands)
+  - [Admin Commands](#admin-commands)
+  - [AI Commands](#ai-commands)
+  - [File Commands](#file-commands)
+  - [Misc Commands](#misc-commands)
+  - [Sudo Commands](#sudo-commands)
+  - [Telegram Tools](#telegram-tools)
 
 ## How It Works
 
@@ -108,6 +114,61 @@ async def test_function(bot: BOT, message: Message):
 
 ## List of Available Commands
 
+### Admin Commands
+
+| Command | Description | Usage |
+|---|---|---|
+| `.ban` | Bans a user from the chat. | `.ban <reply/username> [reason]` |
+| `.unban` | Unbans a user from the chat. | `.unban <reply/username> [reason]` |
+| `.unmute` | Unmutes a user in the chat. | `.unmute <reply/username> [reason]` |
+| `.addf` | Adds a fed chat to the database. | `.addf [name]` |
+| `.delf` | Deletes a fed from the database. | `.delf [id]` or `.delf -all` |
+| `.listf` | Lists the connected feds. | `.listf` or `.listf -id` |
+| `.fban` | Initiates a fed-ban. | `.fban <uid/@/reply> [reason]` |
+| `.fbanp` | Initiates a fed-ban with proof. | `.fbanp <uid/@/reply> [reason]` |
+| `.unfban` | Initiates a fed-unban. | `.unfban <uid/@/reply> [reason]` |
+| `.kick` | Kicks a user from the chat. | `.kick <reply/username> [reason]` |
+| `.kick_im` | Kicks inactive members. | `.kick_im` |
+| `.mute` | Mutes a user in the chat. | `.mute <reply/username> [reason]` |
+| `.promote` | Promotes a user to admin. | `.promote [-anon/-full] <uid/@/reply> [title]` |
+| `.demote` | Demotes a user from admin. | `.demote <uid/@/reply>` |
+| `.demote_all` | Demotes all admins in the chat. | `.demote_all` |
+| `.zombies` | Cleans deleted accounts from the chat. | `.zombies` |
+
+### AI Commands
+
+| Command | Description | Usage |
+|---|---|---|
+| `.gpt` | Asks a question to ChatGPT. | `.gpt <question>` or `.gpt <reply>` |
+| `.igen` | Generates images using DALL-E. | `.igen <prompt>` |
+| `.aic` | Starts a conversation with Gemini AI. | `.aic <prompt>` |
+| `.lh` | Loads a conversation with Gemini AI from history. | `.lh <question> <reply to history file>` |
+| `.ai` | Asks a question to Gemini AI. | `.ai <prompt>` |
+
+### File Commands
+
+| Command | Description | Usage |
+|---|---|---|
+| `.download` | Downloads files or Telegram media. | `.download <url/reply>` or `.download -f <filename> <url/reply>` |
+| `.gsetup` | Sets up Google Drive credentials. | `.gsetup <reply to credentials.json>` |
+| `.agcreds` | Adds pre-generated Google Drive credentials. | `.agcreds <data>` |
+| `.rgcreds` | Removes Google Drive credentials. | `.rgcreds` |
+| `.gls` | Lists files and folders from Google Drive. | `.gls [-f/-d] [-l <limit>] [search_param]` |
+| `.gup` | Uploads a file to Google Drive. | `.gup [-id <folder_id>] <url/reply>` |
+| `.l` | Leeches a URL to Telegram. | `.l <-p/-a/-v/-g/-d> [-s] <link/file_id>` |
+| `.rename` | Renames and uploads a file. | `.rename <url/reply> <new_filename>` |
+| `.spoiler` | Marks a media file as a spoiler. | `.spoiler <reply to photo/video>` |
+| `.upload` | Uploads a file to Telegram. | `.upload [-d/-s] <url/path/cmd>` or `.upload -bulk [-r] <path>` |
+
+### Misc Commands
+
+| Command | Description | Usage |
+|---|---|---|
+| `.alive` | Shows bot information. | `.alive` |
+| `.extupdate` | Updates external modules. | `.extupdate` |
+| `.ln` | Checks LastFM status. | `.ln` |
+| `.sn` | Checks Spotipie status. | `.sn` |
+| `.song` | Downloads a song from YouTube. | `.song <song_name/url>` |
 | Command | Description | Usage |
 |---|---|---|
 | `.flip` | Flips a coin. | `.flip` |
@@ -127,4 +188,41 @@ async def test_function(bot: BOT, message: Message):
 | `.love` | Calculates love compatibility between two users. | `.love <username1> <username2>` |
 | `.magic8ball` | Provides a Magic 8-Ball response to a question. | `.magic8ball <question>` |
 | `.meme` | Fetches a random meme from Reddit. | `.meme` |
+| `.ghost` | Sends a self-destructing message. | `.ghost <message>` |
+
+### Sudo Commands
+
+| Command | Description | Usage |
+|---|---|---|
+| `.addscmd` | Adds sudo commands. | `.addscmd <cmd_name>` or `.addscmd -all` |
+| `.delscmd` | Removes sudo commands. | `.delscmd <cmd_name>` or `.delscmd -all` |
+| `.vscmd` | Views sudo commands. | `.vscmd` |
+| `.disable_su` | Disables your superuser access. | `.disable_su` |
+| `.enable_su` | Enables your superuser access. | `.enable_su` |
+| `.sudo` | Enables or disables sudo. | `.sudo` or `.sudo -c` |
+| `.addsudo` | Adds a sudo user. | `.addsudo [-temp/-su] <uid/@/reply>` |
+| `.delsudo` | Removes a sudo user. | `.delsudo [-temp/-su] <uid/@/reply>` |
+| `.vsudo` | Views sudo users. | `.vsudo` or `.vsudo -id` |
+
+### Telegram Tools
+
+| Command | Description | Usage |
+|---|---|---|
+| `.ids` | Gets the IDs of a chat or user. | `.ids` or `.ids <username>` or `.ids <reply>` |
+| `.join` | Joins a chat. | `.join <chat_username>` |
+| `.leave` | Leaves a chat. | `.leave` or `.leave <chat_username>` |
+| `.click` | Clicks a button in a replied message. | `.click <button_text/index>` |
+| `.del` | Deletes a message. | `.del` or `.del -r <message_link>` |
+| `.del_uh` | Deletes a user's history in a chat. | `.del_uh <reply>` |
+| `.purge` | Purges messages in a chat. | `.purge <reply>` |
+| `.gm` | Gets a message's JSON or attribute. | `.gm <message_link> [attribute]` |
+| `.kang` | Kangs a sticker. | `.kang` or `.kang -f` |
+| `.ping` | Checks the bot's ping. | `.ping` |
+| `.taglogger` | Enables or disables the tag logger. | `.taglogger` or `.taglogger -c` |
+| `.pmlogger` | Enables or disables the PM logger. | `.pmlogger` or `.pmlogger -c` |
+| `.pmguard` | Enables or disables the PM guard. | `.pmguard` or `.pmguard -c` |
+| `.a` or `.allow` | Allows a user to PM you. | `.a` or `.allow` or `.a <uid/@/reply>` |
+| `.nopm` | Disallows a user to PM you. | `.nopm` or `.nopm <uid/@/reply>` |
+| `.reply` | Replies to a message. | `.reply <text>` or `.reply -r <message_link> <text>` |
+| `.resp` | Responds to a logged message. | `.resp <chat_id/reply> <text>` |
 | `.ghost` | Sends a self-destructing message. | `.ghost <message>` |
