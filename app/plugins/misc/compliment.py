@@ -1,8 +1,9 @@
 import random
 
-from app import BOT, Message
-from app.core.db.models import Compliments
+from app import BOT, CustomDB, Message
 from ub_core.utils import extract_user, reply_and_delete
+
+COMPLIMENTS = CustomDB["COMPLIMENTS"]
 
 
 @BOT.add_cmd(cmd="compliment")
@@ -17,12 +18,14 @@ async def compliment(bot: BOT, message: Message):
         await reply_and_delete(message, f"I can't find that user.")
         return
 
-    compliments = await Compliments.all()
+    compliments = await COMPLIMENTS.find_all()
     if not compliments:
-        await reply_and_delete(message, "No compliments in the database. Add some with `.addcompliment`")
+        await reply_and_delete(
+            message, "No compliments in the database. Add some with `.addcompliment`"
+        )
         return
 
-    compliment = random.choice(compliments).text
+    compliment = random.choice(compliments)["text"]
     await message.edit_text(f"{user.mention}, {compliment}")
 
 
@@ -38,5 +41,7 @@ async def addcompliment(bot: BOT, message: Message):
         return
 
     compliment_text = message.text.split(maxsplit=1)[1]
-    await Compliments.create(text=compliment_text, submitted_by=message.from_user.id)
+    await COMPLIMENTS.add_data(
+        {"text": compliment_text, "submitted_by": message.from_user.id}
+    )
     await reply_and_delete(message, "Compliment added successfully.")

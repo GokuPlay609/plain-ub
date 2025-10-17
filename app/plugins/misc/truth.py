@@ -1,8 +1,9 @@
 import random
 
-from app import BOT, Message
-from app.core.db.models import Truths
+from app import BOT, CustomDB, Message
 from ub_core.utils import reply_and_delete
+
+TRUTHS = CustomDB["TRUTHS"]
 
 
 @BOT.add_cmd(cmd="truth")
@@ -12,12 +13,14 @@ async def truth(bot: BOT, message: Message):
     INFO: Get a random truth question.
     USAGE: .truth
     """
-    truths = await Truths.all()
+    truths = await TRUTHS.find_all()
     if not truths:
-        await reply_and_delete(message, "No truths in the database. Add some with `.addtruth`")
+        await reply_and_delete(
+            message, "No truths in the database. Add some with `.addtruth`"
+        )
         return
 
-    truth = random.choice(truths).text
+    truth = random.choice(truths)["text"]
     await message.edit_text(f"**Truth:** {truth}")
 
 
@@ -33,5 +36,5 @@ async def addtruth(bot: BOT, message: Message):
         return
 
     truth_text = message.text.split(maxsplit=1)[1]
-    await Truths.create(text=truth_text, submitted_by=message.from_user.id)
+    await TRUTHS.add_data({"text": truth_text, "submitted_by": message.from_user.id})
     await reply_and_delete(message, "Truth added successfully.")

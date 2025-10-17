@@ -1,8 +1,9 @@
 import random
 
-from app import BOT, Message
-from app.core.db.models import Slaps
+from app import BOT, CustomDB, Message
 from ub_core.utils import extract_user, reply_and_delete
+
+SLAPS = CustomDB["SLAPS"]
 
 
 @BOT.add_cmd(cmd="slap")
@@ -32,10 +33,18 @@ async def slap(bot: BOT, message: Message):
         f"{slapper.mention} slaps {slapped.mention} with {slap_object}!"
     )
 
-    slapper_stats, _ = await Slaps.get_or_create(user_id=slapper.id)
-    slapper_stats.slapped_count += 1
-    await slapper_stats.save()
+    slapper_stats = await SLAPS.find_one({"_id": slapper.id}) or {}
+    slapped_stats = await SLAPS.find_one({"_id": slapped.id}) or {}
 
-    slapped_stats, _ = await Slaps.get_or_create(user_id=slapped.id)
-    slapped_stats.slapped_by_count += 1
-    await slapped_stats.save()
+    await SLAPS.add_data(
+        {
+            "_id": slapper.id,
+            "slapped_count": slapper_stats.get("slapped_count", 0) + 1,
+        }
+    )
+    await SLAPS.add_data(
+        {
+            "_id": slapped.id,
+            "slapped_by_count": slapped_stats.get("slapped_by_count", 0) + 1,
+        }
+    )
