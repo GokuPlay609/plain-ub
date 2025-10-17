@@ -1,8 +1,9 @@
 import random
 
-from app import BOT, Message
-from app.core.db.models import Roasts
+from app import BOT, CustomDB, Message
 from ub_core.utils import extract_user, reply_and_delete
+
+ROASTS = CustomDB["ROASTS"]
 
 
 @BOT.add_cmd(cmd="roast")
@@ -17,12 +18,14 @@ async def roast(bot: BOT, message: Message):
         await reply_and_delete(message, f"I can't find that user.")
         return
 
-    roasts = await Roasts.all()
+    roasts = await ROASTS.find_all()
     if not roasts:
-        await reply_and_delete(message, "No roasts in the database. Add some with `.addroast`")
+        await reply_and_delete(
+            message, "No roasts in the database. Add some with `.addroast`"
+        )
         return
 
-    roast = random.choice(roasts).text
+    roast = random.choice(roasts)["text"]
     await message.edit_text(f"{user.mention}, {roast}")
 
 
@@ -38,5 +41,5 @@ async def addroast(bot: BOT, message: Message):
         return
 
     roast_text = message.text.split(maxsplit=1)[1]
-    await Roasts.create(text=roast_text, submitted_by=message.from_user.id)
+    await ROASTS.add_data({"text": roast_text, "submitted_by": message.from_user.id})
     await reply_and_delete(message, "Roast added successfully.")

@@ -1,8 +1,9 @@
 import random
 
-from app import BOT, Message
-from app.core.db.models import Dares
+from app import BOT, CustomDB, Message
 from ub_core.utils import reply_and_delete
+
+DARES = CustomDB["DARES"]
 
 
 @BOT.add_cmd(cmd="dare")
@@ -12,12 +13,14 @@ async def dare(bot: BOT, message: Message):
     INFO: Get a random dare.
     USAGE: .dare
     """
-    dares = await Dares.all()
+    dares = await DARES.find_all()
     if not dares:
-        await reply_and_delete(message, "No dares in the database. Add some with `.adddare`")
+        await reply_and_delete(
+            message, "No dares in the database. Add some with `.adddare`"
+        )
         return
 
-    dare = random.choice(dares).text
+    dare = random.choice(dares)["text"]
     await message.edit_text(f"**Dare:** {dare}")
 
 
@@ -33,5 +36,5 @@ async def adddare(bot: BOT, message: Message):
         return
 
     dare_text = message.text.split(maxsplit=1)[1]
-    await Dares.create(text=dare_text, submitted_by=message.from_user.id)
+    await DARES.add_data({"text": dare_text, "submitted_by": message.from_user.id})
     await reply_and_delete(message, "Dare added successfully.")
